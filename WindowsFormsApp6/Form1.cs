@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Windows.Forms.DataVisualization.Charting; // https://www.i-programmer.info/programming/uiux/2756-getting-started-with-net-charts.html
+
 namespace WindowsFormsApp6
 {
     public partial class Form1 : Form
@@ -17,56 +19,40 @@ namespace WindowsFormsApp6
             InitializeComponent();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-        static double Function(double x)
-        {
-            return x * x;
-        }
         private void Form1_Load(object sender, EventArgs e)
         {
+            chart1.Series.Clear();
+            chart1.Series.Add("Функція");
+            chart1.Series[0].ChartType = SeriesChartType.Line;
 
+            int[] x = { 1, 2, 3 };
+            int[] y = { 4, 5, 2 };
+
+            for (int i = 0; i < x.Length; i++)
+            {
+                DataPoint dp = new DataPoint();
+                dp.SetValueXY(x[i], y[i]);
+                chart1.Series[0].Points.Add(dp);
+            }            
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button_count_Click(object sender, EventArgs e)
         {
             this.chart1.Series[0].Points.Clear();
             double x, y;
-            double Textboxn1 = Convert.ToDouble(Textboxn.Text);
-            double Textbox11 = Convert.ToDouble(Textbox1.Text);
-            double Textbox22 = Convert.ToDouble(Textbox2.Text);
-            double Textboxmaxx = Convert.ToDouble(Textboxmax.Text);
-            double textboxminn = Convert.ToDouble(textBoxmin.Text);
-            x = textboxminn;
-            while (textboxminn <= Textboxmaxx)
+            double n = Convert.ToDouble(Textbox_n.Text);
+            double x1 = Convert.ToDouble(Textbox_X1.Text);
+            double x2 = Convert.ToDouble(Textbox_X2.Text);
+            double xmax = Convert.ToDouble(Textbox_Xmax.Text);
+            double xmin = Convert.ToDouble(textBox_Xmin.Text);
+            x = xmin;
+            while (xmin <= xmax)
             {
-                y = -((Math.Pow(Math.Cos(Textbox11), 3) + 45 + Textbox22) / (Math.Pow(Textbox11, 13) + Math.Cos(Textbox22)));
+                y = -((Math.Pow(Math.Cos(x1), 3) + 45 + x2) / (Math.Pow(x1, 13) + Math.Cos(x2)));
                 this.chart1.Series[0].Points.AddXY(0, y);
                 this.chart1.Series[1].Points.AddXY(x,0);
-                x += Textboxn1;
+                x += n;
             }
-        }
-
-        private void xmax_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void x1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void x2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Textboxn_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
